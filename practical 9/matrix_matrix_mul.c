@@ -54,13 +54,13 @@ int main(int argc, char** argv) {
 
     if (rank == 0) {
         // Print the result
-        // printf("Result Matrix C:\n");
-        // for (i = 0; i < M; i++) {
-        //     for (j = 0; j < P; j++) {
-        //         printf("%d ", C[i][j]);
-        //     }
-        //     printf("\n");
-        // }
+        printf("Result Matrix C:\n");
+        for (i = 0; i < M; i++) {
+            for (j = 0; j < P; j++) {
+                printf("%d ", C[i][j]);
+            }
+            printf("\n");
+        }
         // Print time taken
         printf("Time taken for matrix-matrix multiplication: %f seconds\n", end_time - start_time);
     }

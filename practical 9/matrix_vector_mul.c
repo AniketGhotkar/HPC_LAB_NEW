@@ -49,11 +49,11 @@ int main(int argc, char** argv) {
 
     if (rank == 0) {
         // Print the result
-        // printf("Result Vector C:\n");
-        // for (i = 0; i < M; i++) {
-        //     printf("%d ", C[i]);
-        // }
-        // printf("\n");
+        printf("Result Vector C:\n");
+        for (i = 0; i < M; i++) {
+            printf("%d ", C[i]);
+        }
+        printf("\n");
 
         // Print time taken
         printf("Time taken for matrix-vector multiplication: %f seconds\n", end_time - start_time);

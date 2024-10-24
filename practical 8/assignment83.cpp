@@ -4,13 +4,13 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char** argv) {
     int rank, size;
     const int n = 8; 
     vector<int> A(n);
     int local_sum = 0;
 
-    MPI_Init();
+    MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 

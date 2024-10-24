@@ -1,33 +1,24 @@
 #include <mpi.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 int main(int argc, char** argv) {
-    MPI_Init(&argc, &argv); 
-
-    int rank;
+    int rank, size, data;
+    
+    MPI_Init(&argc, &argv);              
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    int msg1 = 100, msg2 = 200;
-
+    MPI_Comm_size(MPI_COMM_WORLD, &size); 
+    
 
     if (rank == 0) {
-        msg1 = 100; 
-        MPI_Send(&msg1, 1, MPI_INT, 1, 0, MPI_COMM_WORLD); 
-
-        printf("Process 0: Sent message to Process 1 and waiting for message from Process 1...\n");
-        
-        MPI_Recv(&msg2, 1, MPI_INT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        // Deadlock scenario: process 0 waits to receive, but process 1 is also waiting to receive
+        MPI_Recv(&data, 1, MPI_INT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); // Process 0 waiting to receive
+        MPI_Send(&data, 1, MPI_INT, 1, 0, MPI_COMM_WORLD); // Process 0 sends after receiving
     } else if (rank == 1) {
-        msg2 = 200; // Some message
-        MPI_Send(&msg2, 1, MPI_INT, 0, 0, MPI_COMM_WORLD); 
-        
-        printf("Process 1: Sent message to Process 0 and waiting for message from Process 0...\n");
-
-        MPI_Recv(&msg1, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Recv(&data, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); // Process 1 waiting to receive
+        MPI_Send(&data, 1, MPI_INT, 0, 0, MPI_COMM_WORLD); // Process 1 sends after receiving
     }
-
+    
     MPI_Finalize();
+    
     return 0;
 }
-
-
